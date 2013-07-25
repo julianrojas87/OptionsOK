@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/slee_1_1.jar" sourcepath="lib/jain_slee-1_0-fr-api.zip"/>
+	<classpathentry kind="lib" path="lib/DU/sip11-ra-DU-1.2.3.GA.jar/library/jain-sip-api-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/DU/sip11-ra-DU-1.2.3.GA.jar/library/jain-sip-ri-1.2.89.jar"/>
+	<classpathentry kind="lib" path="lib/DU/sip11-ra-DU-1.2.3.GA.jar/sip11-events-1.2.3.GA.jar"/>
+	<classpathentry kind="lib" path="lib/DU/sip11-ra-DU-1.2.3.GA.jar/sip11-ra-1.2.3.GA.jar"/>
+	<classpathentry kind="lib" path="lib/DU/sip11-ra-DU-1.2.3.GA.jar/sip11-ratype-1.2.3.GA.jar"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project default="all" name="OptionsOK">
+    <target name="init">
+        <path id="slee">
+            <pathelement location="lib/slee_1_1.jar"/>
+        </path>
+        <taskdef classname="org.mobicents.eclipslee.ant.SbbJar"
+            classpath="lib/slee-tasks.jar" name="sbbjar"/>
+        <taskdef classname="org.mobicents.eclipslee.ant.EventJar"
+            classpath="lib/slee-tasks.jar" name="eventjar"/>
+        <taskdef classname="org.mobicents.eclipslee.ant.ProfileSpecJar"
+            classpath="lib/slee-tasks.jar" name="profilespecjar"/>
+        <taskdef classname="org.mobicents.eclipslee.ant.DeployableJar"
+            classpath="lib/slee-tasks.jar" name="deployablejar"/>
+        <taskdef
+            classname="org.mobicents.eclipslee.ant.ResourceAdaptorTypeJar"
+            classpath="lib/slee-tasks.jar" name="resourceadaptortypejar"/>
+        <taskdef
+            classname="org.mobicents.eclipslee.ant.ResourceAdaptorJar"
+            classpath="lib/slee-tasks.jar" name="resourceadaptorjar"/>
+        <path id="ExternalComponents">
+            <pathelement location="lib/DU/sip11-ra-DU-1.2.3.GA.jar/library/jain-sip-api-1.2.jar"/>
+            <pathelement location="lib/DU/sip11-ra-DU-1.2.3.GA.jar/library/jain-sip-ri-1.2.89.jar"/>
+            <pathelement location="lib/DU/sip11-ra-DU-1.2.3.GA.jar/sip11-events-1.2.3.GA.jar"/>
+            <pathelement location="lib/DU/sip11-ra-DU-1.2.3.GA.jar/sip11-ra-1.2.3.GA.jar"/>
+            <pathelement location="lib/DU/sip11-ra-DU-1.2.3.GA.jar/sip11-ratype-1.2.3.GA.jar"/>
+        </path>
+        <path id="path-OptionsOK-sbb">
+            <pathelement location="/home/julian/Telcomp-Workspace/OptionsOK/lib/DU/sip11-ra-DU-1.2.3.GA.jar/sip11-events-1.2.3.GA.jar"/>
+        </path>
+    </target>
+    <target depends="init" name="all">
+        <ant target="build-OptionsOK-sbb"/>
+        <ant target="build-optionsOk-DU"/>
+    </target>
+    <target depends="init" name="clean">
+        <ant target="clean-OptionsOK-sbb"/>
+        <ant target="clean-optionsOk-DU"/>
+    </target>
+    <target depends="init" name="build-OptionsOK-sbb">
+        <mkdir dir="classes/OptionsOK-sbb"/>
+        <mkdir dir="jars/"/>
+        <javac destdir="classes/OptionsOK-sbb" includeantruntime="false"
+            includes="org/emcali/sbb/OptionsOKSbb.java" srcdir="src">
+            <classpath>
+                <path refid="path-OptionsOK-sbb"/>
+                <path refid="ExternalComponents"/>
+                <path refid="slee"/>
+            </classpath>
+        </javac>
+        <sbbjar classpath="classes/OptionsOK-sbb"
+            destfile="jars/OptionsOK-sbb.jar" sbbjarxml="src/org/emcali/sbb/OptionsOK-sbb-jar.xml"/>
+    </target>
+    <target name="clean-OptionsOK-sbb">
+        <delete file="jars/OptionsOK-sbb.jar"/>
+        <delete dir="classes/OptionsOK-sbb"/>
+    </target>
+    <target depends="build-OptionsOK-sbb" name="build-optionsOk-DU">
+        <mkdir dir="classes/optionsOk-DU"/>
+        <copy file="src/org/emcali/sbb/optionsOk-deployable-unit.xml" tofile="classes/optionsOk-DU/deployable-unit.xml"/>
+        <jar jarfile="jars/optionsOk-DU.jar">
+            <metainf dir="classes/optionsOk-DU" includes="deployable-unit.xml"/>
+            <fileset dir="" includes="jars/OptionsOK-sbb.jar"/>
+            <fileset dir="." includes="src/org/emcali/sbb/OptionsOK-service.xml"/>
+        </jar>
+    </target>
+    <target name="clean-optionsOk-DU">
+        <delete file="jars/optionsOk-DU.jar"/>
+        <delete dir="classes/optionsOk-DU"/>
+    </target>
+</project>
